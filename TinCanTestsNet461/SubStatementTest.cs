@@ -17,35 +17,38 @@ namespace TinCanTestsNet461
 {
     using System;
     using System.Collections.Generic;
-    using NUnit.Framework;
+    //using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json.Linq;
     using TinCan;
     using TinCan.Json;
 
-    [TestFixture]
-    class SubStatementTest
+    [TestClass]
+    public class SubStatementTest
     {
-        [SetUp]
+        [TestInitialize]
         public void Init()
         {
-            Console.WriteLine("Running " + TestContext.CurrentContext.Test.FullName);
+            //Console.WriteLine("Running " + TestContext.CurrentContext.Test.FullName);
         }
 
-        [Test]
+        [TestMethod]
         public void TestEmptyCtr()
         {
             var obj = new SubStatement();
-            Assert.IsInstanceOf<SubStatement>(obj);
+            //Assert.IsInstanceOf<SubStatement>(obj);
+            Assert.IsInstanceOfType(obj, new SubStatement().GetType());
             Assert.IsNull(obj.actor);
             Assert.IsNull(obj.verb);
             Assert.IsNull(obj.target);
             Assert.IsNull(obj.result);
             Assert.IsNull(obj.context);
 
-            StringAssert.AreEqualIgnoringCase("{\"objectType\":\"SubStatement\"}", obj.ToJSON());
+            //StringAssert.AreEqualIgnoringCase("{\"objectType\":\"SubStatement\"}", obj.ToJSON());
+            Assert.AreEqual("{\"objectType\":\"SubStatement\"}", obj.ToJSON(), true);
         }
 
-        [Test]
+        [TestMethod]
         public void TestJObjectCtrNestedSubStatement()
         {
             JObject cfg = new JObject();
@@ -54,7 +57,8 @@ namespace TinCanTestsNet461
             cfg.Add("object", Support.subStatement.ToJObject());
 
             var obj = new SubStatement(cfg);
-            Assert.IsInstanceOf<SubStatement>(obj);
+            //Assert.IsInstanceOf<SubStatement>(obj);
+            Assert.IsInstanceOfType(obj, new SubStatement().GetType());
             Assert.IsNull(obj.target);
         }
     }

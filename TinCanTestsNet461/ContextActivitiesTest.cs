@@ -16,12 +16,13 @@
 namespace TinCanTestsNet461
 {
     using System.Collections.Generic;
-    using NUnit.Framework;
+    //using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TinCan;
     using TinCan.Json;
 
-    [TestFixture]
-    class ContextActivitiesTest
+    [TestClass]
+    public class ContextActivitiesTest
     {
         private Activity sampleActivity1 = new Activity
         {
@@ -33,7 +34,7 @@ namespace TinCanTestsNet461
             id = "http://1.bar/"
         };
 
-        [Test]
+        [TestMethod]
         public void ConstructorWithObject()
         {
             var json = "{" +
@@ -51,7 +52,7 @@ namespace TinCanTestsNet461
             ValidateActivityList(contextActivities.other, 1);
         }
 
-        [Test]
+        [TestMethod]
         public void ConstructorWithArray()
         {
             var json = "{" +

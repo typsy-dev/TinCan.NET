@@ -16,19 +16,21 @@
 namespace TinCanTestsNet461
 {
     using System;
-    using NUnit.Framework;
+    //using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json.Linq;
     using TinCan;
     using TinCan.Json;
 
-    [TestFixture]
-    class RemoteLRSTest
+    [TestClass]
+    public class RemoteLRSTest
     {
-        [Test]
+        [TestMethod]
         public void TestEmptyCtr()
         {
             var obj = new RemoteLRS();
-            Assert.IsInstanceOf<RemoteLRS>(obj);
+            //Assert.IsInstanceOf<RemoteLRS>(obj);
+            Assert.IsInstanceOfType(obj, new RemoteLRS().GetType());
             Assert.IsNull(obj.endpoint);
             Assert.IsNull(obj.auth);
             Assert.IsNull(obj.version);

@@ -16,18 +16,20 @@
 namespace TinCanTestsNet461
 {
     using Newtonsoft.Json.Linq;
-    using NUnit.Framework;
+    //using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using TinCan;
 
-    [TestFixture]
-    class ContextTest
+    [TestClass]
+    public class ContextTest
     {
-        [TestCase(false)]
-        [TestCase(true)]
+        [TestMethod]
+        [DataRow(false)]
+        [DataRow(true)]
         public void TestGroupInstructor(bool isGroup)
         {
             // Build our test JObject
@@ -48,8 +50,9 @@ namespace TinCanTestsNet461
             Assert.AreEqual(isGroup, testContext.instructor is Group);
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
+        [TestMethod]
+        [DataRow(false)]
+        [DataRow(true)]
         public void TestGroupTeam(bool isGroup)
         {
             // Build our test JObject

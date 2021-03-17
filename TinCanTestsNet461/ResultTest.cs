@@ -16,19 +16,21 @@
 namespace TinCanTestsNet461
 {
     using System;
-    using NUnit.Framework;
+    //using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json.Linq;
     using TinCan;
     using TinCan.Json;
 
-    [TestFixture]
-    class ResultTest
+    [TestClass]
+    public class ResultTest
     {
-        [Test]
+        [TestMethod]
         public void TestEmptyCtr()
         {
             var obj = new Result();
-            Assert.IsInstanceOf<Result>(obj);
+            //Assert.IsInstanceOf<Result>(obj);
+            Assert.IsInstanceOfType(obj, new Result().GetType());
             Assert.IsNull(obj.completion);
             Assert.IsNull(obj.success);
             Assert.IsNull(obj.response);
@@ -36,10 +38,11 @@ namespace TinCanTestsNet461
             Assert.IsNull(obj.score);
             Assert.IsNull(obj.extensions);
 
-            StringAssert.AreEqualIgnoringCase("{}", obj.ToJSON());
+            //StringAssert.AreEqualIgnoringCase("{}", obj.ToJSON());
+            Assert.AreEqual("{}", obj.ToJSON(), true);
         }
 
-        [Test]
+        [TestMethod]
         public void TestJObjectCtr()
         {
             var cfg = new JObject();
@@ -48,23 +51,31 @@ namespace TinCanTestsNet461
             cfg.Add("response", "Yes");
 
             var obj = new Result(cfg);
-            Assert.IsInstanceOf<Result>(obj);
-            Assert.That(obj.completion, Is.EqualTo(true));
-            Assert.That(obj.success, Is.EqualTo(true));
-            Assert.That(obj.response, Is.EqualTo("Yes"));
+            //Assert.IsInstanceOf<Result>(obj);
+            Assert.IsInstanceOfType(obj, new Result().GetType());
+            //Assert.That(obj.completion, Is.EqualTo(true));
+            Assert.AreEqual(obj.completion, true);
+            //Assert.That(obj.success, Is.EqualTo(true));
+            Assert.AreEqual(obj.success, true);
+            //Assert.That(obj.response, Is.EqualTo("Yes"));
+            Assert.AreEqual(obj.response, "Yes");
         }
 
-        [Test]
+        [TestMethod]
         public void TestStringOfJSONCtr()
         {
             var json = "{\"success\": true, \"completion\": true, \"response\": \"Yes\"}";
             var strOfJson = new StringOfJSON(json);
 
             var obj = new Result(strOfJson);
-            Assert.IsInstanceOf<Result>(obj);
-            Assert.That(obj.success, Is.EqualTo(true));
-            Assert.That(obj.completion, Is.EqualTo(true));
-            Assert.That(obj.response, Is.EqualTo("Yes"));
+            //Assert.IsInstanceOf<Result>(obj);
+            Assert.IsInstanceOfType(obj, new Result().GetType());
+            //Assert.That(obj.success, Is.EqualTo(true));
+            //Assert.That(obj.completion, Is.EqualTo(true));
+            //Assert.That(obj.response, Is.EqualTo("Yes"));
+            Assert.AreEqual(obj.completion, true);
+            Assert.AreEqual(obj.success, true);
+            Assert.AreEqual(obj.response, "Yes");
         }
     }
 }

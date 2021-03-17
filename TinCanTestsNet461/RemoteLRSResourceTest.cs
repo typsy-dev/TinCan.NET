@@ -18,22 +18,26 @@ namespace TinCanTestsNet461
     using System;
     using System.Collections.Generic;
     using System.Xml;
-    using NUnit.Framework;
+    //using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json.Linq;
     using TinCan;
     using TinCan.Documents;
     using TinCan.Json;
     using TinCan.LRSResponses;
 
-    [TestFixture]
-    class RemoteLRSResourceTest
+    [TestClass]
+    public class RemoteLRSResourceTest
     {
         RemoteLRS lrs;
 
-        [SetUp]
+        public TestContext TestContext { get; set; }
+
+        [TestInitialize]
         public void Init()
         {
-            Console.WriteLine("Running " + TestContext.CurrentContext.Test.FullName);
+            //Console.WriteLine("Running " +  TestContext.CurrentContext.Test.FullName);
+            Console.WriteLine($"Running {TestContext.TestName}");
 
             //
             // these are credentials used by the other OSS libs when building via Travis-CI
@@ -47,14 +51,14 @@ namespace TinCanTestsNet461
             );
         }
 
-        [Test]
+        [TestMethod]
         public void TestAbout()
         {
             AboutLRSResponse lrsRes = lrs.About();
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestAboutFailure()
         {
             lrs.endpoint = new Uri("http://cloud.scorm.com/tc/3TQLAI9/sandbox/");
@@ -64,7 +68,7 @@ namespace TinCanTestsNet461
             Console.WriteLine("TestAboutFailure - errMsg: " + lrsRes.errMsg);
         }
 
-        [Test]
+        [TestMethod]
         public void TestSaveStatement()
         {
             var statement = new Statement();
@@ -78,7 +82,7 @@ namespace TinCanTestsNet461
             Assert.IsNotNull(lrsRes.content.id);
         }
 
-        [Test]
+        [TestMethod]
         public void TestSaveStatementWithID()
         {
             var statement = new Statement();
@@ -92,7 +96,7 @@ namespace TinCanTestsNet461
             Assert.AreEqual(statement, lrsRes.content);
         }
 
-        [Test]
+        [TestMethod]
         public void TestSaveStatementStatementRef()
         {
             var statement = new Statement();
@@ -106,7 +110,7 @@ namespace TinCanTestsNet461
             Assert.AreEqual(statement, lrsRes.content);
         }
 
-        [Test]
+        [TestMethod]
         public void TestSaveStatementSubStatement()
         {
             var statement = new Statement();
@@ -122,7 +126,7 @@ namespace TinCanTestsNet461
             Assert.AreEqual(statement, lrsRes.content);
         }
 
-        [Test]
+        [TestMethod]
         public void TestVoidStatement()
         {
             Guid toVoid = Guid.NewGuid();
@@ -133,7 +137,7 @@ namespace TinCanTestsNet461
             Assert.AreEqual(toVoid, ((StatementRef) lrsRes.content.target).id, "voiding statement target correct id");
         }
 
-        [Test]
+        [TestMethod]
         public void TestSaveStatements()
         {
             var statement1 = new Statement();
@@ -156,7 +160,7 @@ namespace TinCanTestsNet461
             // TODO: check statements match and ids not null
         }
 
-        [Test]
+        [TestMethod]
         public void TestRetrieveStatement()
         {
             var statement = new TinCan.Statement();
@@ -180,7 +184,7 @@ namespace TinCanTestsNet461
             }
         }
 
-        [Test]
+        [TestMethod]
         public void TestQueryStatements()
         {
             var query = new TinCan.StatementsQuery();
@@ -197,7 +201,7 @@ namespace TinCanTestsNet461
             Console.WriteLine("TestQueryStatements - statement count: " + lrsRes.content.statements.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMoreStatements()
         {
             var query = new TinCan.StatementsQuery();
@@ -217,22 +221,23 @@ namespace TinCanTestsNet461
             }
         }
 
-        [Test]
+        [TestMethod]
         public void TestRetrieveStateIds()
         {
             ProfileKeysLRSResponse lrsRes = lrs.RetrieveStateIds(Support.activity, Support.agent);
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRetrieveState()
         {
             StateLRSResponse lrsRes = lrs.RetrieveState("test", Support.activity, Support.agent);
             Assert.IsTrue(lrsRes.success);
-            Assert.IsInstanceOf<TinCan.Documents.StateDocument>(lrsRes.content);
+            //Assert.IsInstanceOf<TinCan.Documents.StateDocument>(lrsRes.content);
+            Assert.IsInstanceOfType(lrsRes.content, new TinCan.Documents.StateDocument().GetType());
         }
 
-        [Test]
+        [TestMethod]
         public void TestSaveState()
         {
             var doc = new StateDocument();
@@ -245,7 +250,7 @@ namespace TinCanTestsNet461
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDeleteState()
         {
             var doc = new StateDocument();
@@ -257,29 +262,30 @@ namespace TinCanTestsNet461
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestClearState()
         {
             LRSResponse lrsRes = lrs.ClearState(Support.activity, Support.agent);
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRetrieveActivityProfileIds()
         {
             ProfileKeysLRSResponse lrsRes = lrs.RetrieveActivityProfileIds(Support.activity);
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRetrieveActivityProfile()
         {
             ActivityProfileLRSResponse lrsRes = lrs.RetrieveActivityProfile("test", Support.activity);
             Assert.IsTrue(lrsRes.success);
-            Assert.IsInstanceOf<TinCan.Documents.ActivityProfileDocument>(lrsRes.content);
+            //Assert.IsInstanceOf<TinCan.Documents.ActivityProfileDocument>(lrsRes.content);
+            Assert.IsInstanceOfType(lrsRes.content, new TinCan.Documents.ActivityProfileDocument().GetType());
         }
 
-        [Test]
+        [TestMethod]
         public void TestSaveActivityProfile()
         {
             var doc = new ActivityProfileDocument();
@@ -291,7 +297,7 @@ namespace TinCanTestsNet461
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDeleteActivityProfile()
         {
             var doc = new ActivityProfileDocument();
@@ -302,22 +308,23 @@ namespace TinCanTestsNet461
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRetrieveAgentProfileIds()
         {
             ProfileKeysLRSResponse lrsRes = lrs.RetrieveAgentProfileIds(Support.agent);
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRetrieveAgentProfile()
         {
             AgentProfileLRSResponse lrsRes = lrs.RetrieveAgentProfile("test", Support.agent);
             Assert.IsTrue(lrsRes.success);
-            Assert.IsInstanceOf<TinCan.Documents.AgentProfileDocument>(lrsRes.content);
+            //Assert.IsInstanceOf<TinCan.Documents.AgentProfileDocument>(lrsRes.content);
+            Assert.IsInstanceOfType(lrsRes.content, new TinCan.Documents.AgentProfileDocument().GetType());
         }
 
-        [Test]
+        [TestMethod]
         public void TestSaveAgentProfile()
         {
             var doc = new AgentProfileDocument();
@@ -329,7 +336,7 @@ namespace TinCanTestsNet461
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDeleteAgentProfile()
         {
             var doc = new AgentProfileDocument();
@@ -340,7 +347,7 @@ namespace TinCanTestsNet461
             Assert.IsTrue(lrsRes.success);
         }
 
-        [Test]
+        [TestMethod]
         public void TestExtendedParameters()
         {
             // RemoteLRS doesn't provide a helpful interface for testing

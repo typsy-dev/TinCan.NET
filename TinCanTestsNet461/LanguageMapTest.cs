@@ -16,17 +16,19 @@
 namespace TinCanTestsNet461
 {
     using System;
-    using NUnit.Framework;
+    //using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TinCan;
 
-    [TestFixture]
-    class LanguageMapTest
+    [TestClass]
+    public class LanguageMapTest
     {
-        [Test]
+        [TestMethod]
         public void TestEmptyCtr()
         {
             LanguageMap obj = new LanguageMap();
-            Assert.IsInstanceOf<LanguageMap>(obj);
+            //Assert.IsInstanceOf<LanguageMap>(obj);
+            Assert.IsInstanceOfType(obj, new LanguageMap().GetType());
         }
     }
 }

@@ -17,25 +17,27 @@ namespace TinCanTestsNet461
 {
     using System;
     using System.Collections.Generic;
-    using NUnit.Framework;
+    //using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json.Linq;
     using TinCan;
     using TinCan.Json;
 
-    [TestFixture]
-    class StatementTest
+    [TestClass]
+    public class StatementTest
     {
-        [SetUp]
+        [TestInitialize]
         public void Init()
         {
-            Console.WriteLine("Running " + TestContext.CurrentContext.Test.FullName);
+            //Console.WriteLine("Running " + TestContext.CurrentContext.Test.FullName);
         }
 
-        [Test]
+        [TestMethod]
         public void TestEmptyCtr()
         {
             Statement obj = new Statement();
-            Assert.IsInstanceOf<Statement>(obj);
+            //Assert.IsInstanceOf<Statement>(obj);
+            Assert.IsInstanceOfType(obj, new Statement().GetType());
             Assert.IsNull(obj.id);
             Assert.IsNull(obj.actor);
             Assert.IsNull(obj.verb);
@@ -46,10 +48,11 @@ namespace TinCanTestsNet461
             Assert.IsNull(obj.timestamp);
             Assert.IsNull(obj.stored);
 
-            StringAssert.AreEqualIgnoringCase("{\"version\":\"1.0.3\"}", obj.ToJSON());
+            //StringAssert.AreEqualIgnoringCase("{\"version\":\"1.0.3\"}", obj.ToJSON());
+            Assert.AreEqual("{\"version\":\"1.0.3\"}", obj.ToJSON(), true);
         }
 
-        [Test]
+        [TestMethod]
         public void TestJObjectCtrSubStatement()
         {
             JObject cfg = new JObject();
@@ -58,8 +61,10 @@ namespace TinCanTestsNet461
             cfg.Add("object", Support.subStatement.ToJObject());
 
             Statement obj = new Statement(cfg);
-            Assert.IsInstanceOf<Statement>(obj);
-            Assert.IsInstanceOf<SubStatement>(obj.target);
+            //Assert.IsInstanceOf<Statement>(obj);
+            Assert.IsInstanceOfType(obj, new Statement().GetType());
+            //Assert.IsInstanceOf<SubStatement>(obj.target);
+            Assert.IsInstanceOfType(obj.target, new SubStatement().GetType());
         }
     }
 }

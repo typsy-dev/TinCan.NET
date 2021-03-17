@@ -14,28 +14,31 @@
     limitations under the License.
 */
 using System;
-using NUnit.Framework;
+// Newtonsoft.Json.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using TinCan;
 using TinCan.Json;
 
 namespace TinCanTestsNet461
 {
-    [TestFixture]
-    class VerbTest
+    [TestClass]
+    public class VerbTest
     {
-        [Test]
+        [TestMethod]
         public void TestEmptyCtr()
         {
             Verb obj = new Verb();
-            Assert.IsInstanceOf<Verb>(obj);
+            //Assert.IsInstanceOf<Verb>(obj);
+            Assert.IsInstanceOfType(obj, new Verb().GetType());
             Assert.IsNull(obj.id);
             Assert.IsNull(obj.display);
 
-            StringAssert.AreEqualIgnoringCase("{}", obj.ToJSON());
+            //StringAssert.AreEqualIgnoringCase("{}", obj.ToJSON());
+            Assert.AreEqual("{}", obj.ToJSON(), true);
         }
 
-        [Test]
+        [TestMethod]
         public void TestJObjectCtr()
         {
             String id = "http://adlnet.gov/expapi/verbs/experienced";
@@ -44,11 +47,13 @@ namespace TinCanTestsNet461
             cfg.Add("id", id);
 
             Verb obj = new Verb(cfg);
-            Assert.IsInstanceOf<Verb>(obj);
-            Assert.That(obj.ToJSON(), Is.EqualTo("{\"id\":\"" + id + "\"}"));
+            //Assert.IsInstanceOf<Verb>(obj);
+            Assert.IsInstanceOfType(obj, new Verb().GetType());
+            //Assert.That(obj.ToJSON(), Is.EqualTo("{\"id\":\"" + id + "\"}"));
+            Assert.AreEqual("{\"id\":\"" + id + "\"}", obj.ToJSON(), true);
         }
 
-        [Test]
+        [TestMethod]
         public void TestStringOfJSONCtr()
         {
             String id = "http://adlnet.gov/expapi/verbs/experienced";
@@ -56,8 +61,10 @@ namespace TinCanTestsNet461
             StringOfJSON strOfJson = new StringOfJSON(json);
 
             Verb obj = new Verb(strOfJson);
-            Assert.IsInstanceOf<Verb>(obj);
-            Assert.That(obj.ToJSON(), Is.EqualTo(json));
+            //Assert.IsInstanceOf<Verb>(obj);
+            Assert.IsInstanceOfType(obj, new Verb().GetType());
+            //Assert.That(obj.ToJSON(), Is.EqualTo(json));
+            Assert.AreEqual(json, obj.ToJSON(), true);
         }
     }
 }
