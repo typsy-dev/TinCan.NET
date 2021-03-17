@@ -13,17 +13,13 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-namespace TinCanTestsNet461
+namespace TinCanTests
 {
     using System;
     using System.Collections.Generic;
-    using System.Xml;
-    //using NUnit.Framework;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Newtonsoft.Json.Linq;
     using TinCan;
     using TinCan.Documents;
-    using TinCan.Json;
     using TinCan.LRSResponses;
 
     [TestClass]

@@ -13,27 +13,20 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-namespace TinCanTestsNet461
+namespace TinCanTests
 {
-    using System;
-    //using NUnit.Framework;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Newtonsoft.Json.Linq;
     using TinCan;
-    using TinCan.Json;
 
     [TestClass]
-    public class RemoteLRSTest
+    public class LanguageMapTest
     {
         [TestMethod]
         public void TestEmptyCtr()
         {
-            var obj = new RemoteLRS();
-            //Assert.IsInstanceOf<RemoteLRS>(obj);
-            Assert.IsInstanceOfType(obj, new RemoteLRS().GetType());
-            Assert.IsNull(obj.endpoint);
-            Assert.IsNull(obj.auth);
-            Assert.IsNull(obj.version);
+            LanguageMap obj = new LanguageMap();
+            //Assert.IsInstanceOf<LanguageMap>(obj);
+            Assert.IsInstanceOfType(obj, new LanguageMap().GetType());
         }
     }
 }

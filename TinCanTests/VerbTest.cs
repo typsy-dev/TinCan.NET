@@ -14,13 +14,12 @@
     limitations under the License.
 */
 using System;
-// Newtonsoft.Json.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using TinCan;
 using TinCan.Json;
 
-namespace TinCanTestsNet461
+namespace TinCanTests
 {
     [TestClass]
     public class VerbTest

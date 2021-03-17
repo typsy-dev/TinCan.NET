@@ -13,18 +13,14 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-namespace TinCanTestsNet461
+namespace TinCanTests
 {
-    using System;
-    using System.Collections.Generic;
-    //using NUnit.Framework;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json.Linq;
     using TinCan;
-    using TinCan.Json;
 
     [TestClass]
-    public class SubStatementTest
+    public class StatementTest
     {
         [TestInitialize]
         public void Init()
@@ -35,31 +31,36 @@ namespace TinCanTestsNet461
         [TestMethod]
         public void TestEmptyCtr()
         {
-            var obj = new SubStatement();
-            //Assert.IsInstanceOf<SubStatement>(obj);
-            Assert.IsInstanceOfType(obj, new SubStatement().GetType());
+            Statement obj = new Statement();
+            //Assert.IsInstanceOf<Statement>(obj);
+            Assert.IsInstanceOfType(obj, new Statement().GetType());
+            Assert.IsNull(obj.id);
             Assert.IsNull(obj.actor);
             Assert.IsNull(obj.verb);
             Assert.IsNull(obj.target);
             Assert.IsNull(obj.result);
             Assert.IsNull(obj.context);
+            Assert.IsNull(obj.version);
+            Assert.IsNull(obj.timestamp);
+            Assert.IsNull(obj.stored);
 
-            //StringAssert.AreEqualIgnoringCase("{\"objectType\":\"SubStatement\"}", obj.ToJSON());
-            Assert.AreEqual("{\"objectType\":\"SubStatement\"}", obj.ToJSON(), true);
+            //StringAssert.AreEqualIgnoringCase("{\"version\":\"1.0.3\"}", obj.ToJSON());
+            Assert.AreEqual("{\"version\":\"1.0.3\"}", obj.ToJSON(), true);
         }
 
         [TestMethod]
-        public void TestJObjectCtrNestedSubStatement()
+        public void TestJObjectCtrSubStatement()
         {
             JObject cfg = new JObject();
             cfg.Add("actor", Support.agent.ToJObject());
             cfg.Add("verb", Support.verb.ToJObject());
             cfg.Add("object", Support.subStatement.ToJObject());
 
-            var obj = new SubStatement(cfg);
-            //Assert.IsInstanceOf<SubStatement>(obj);
-            Assert.IsInstanceOfType(obj, new SubStatement().GetType());
-            Assert.IsNull(obj.target);
+            Statement obj = new Statement(cfg);
+            //Assert.IsInstanceOf<Statement>(obj);
+            Assert.IsInstanceOfType(obj, new Statement().GetType());
+            //Assert.IsInstanceOf<SubStatement>(obj.target);
+            Assert.IsInstanceOfType(obj.target, new SubStatement().GetType());
         }
     }
 }
