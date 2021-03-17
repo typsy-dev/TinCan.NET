@@ -16,25 +16,26 @@
 namespace TinCanTestsNet461
 {
     using System;
-    using NUnit.Framework;
+    //using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json.Linq;
     using TinCan;
     using TinCan.Json;
 
-    [TestFixture]
-    class AgentTest
+    [TestClass]
+    public class AgentTest
     {
-        [Test]
+        [TestMethod]
         public void TestEmptyCtr()
         {
             var obj = new Agent();
-            Assert.IsInstanceOf<Agent>(obj);
+            Assert.IsInstanceOfType(obj, new Agent().GetType());
             Assert.IsNull(obj.mbox);
 
-            StringAssert.AreEqualIgnoringCase("{\"objectType\":\"Agent\"}", obj.ToJSON());
+            Assert.AreEqual("{\"objectType\":\"Agent\"}", obj.ToJSON(), true);
         }
 
-        [Test]
+        [TestMethod]
         public void TestJObjectCtr()
         {
             var mbox = "mailto:tincancsharp@tincanapi.com";
@@ -43,11 +44,13 @@ namespace TinCanTestsNet461
             cfg.Add("mbox", mbox);
 
             var obj = new Agent(cfg);
-            Assert.IsInstanceOf<Agent>(obj);
-            Assert.That(obj.mbox, Is.EqualTo(mbox));
+            //Assert.IsInstanceOf<Agent>(obj);
+            Assert.IsInstanceOfType(obj, new Agent().GetType());
+            //Assert.That(obj.mbox, Is.EqualTo(mbox));
+            Assert.AreEqual(obj.mbox, mbox);
         }
 
-        [Test]
+        [TestMethod]
         public void TestStringOfJSONCtr()
         {
             var mbox = "mailto:tincancsharp@tincanapi.com";
@@ -56,8 +59,10 @@ namespace TinCanTestsNet461
             var strOfJson = new StringOfJSON(json);
 
             var obj = new Agent(strOfJson);
-            Assert.IsInstanceOf<Agent>(obj);
-            Assert.That(obj.mbox, Is.EqualTo(mbox));
+            //Assert.IsInstanceOf<Agent>(obj);
+            Assert.IsInstanceOfType(obj, new Agent().GetType());
+            //Assert.That(obj.mbox, Is.EqualTo(mbox));
+            Assert.AreEqual(obj.mbox, mbox);
         }
     }
 }

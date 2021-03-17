@@ -15,13 +15,14 @@
 */
 namespace TinCanTestsNet461
 {
-    using NUnit.Framework;
+    //using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TinCan;
 
-    [TestFixture]
-    class ActivityTest
+    [TestClass]
+    public class ActivityTest
     {
-        [Test]
+        [TestMethod]
         public void TestActivityIdTrailingSlash()
         {
             var activity = new Activity();
@@ -30,7 +31,7 @@ namespace TinCanTestsNet461
             Assert.AreEqual(noTrailingSlash, activity.id);
         }
 
-        [Test]
+        [TestMethod]
         public void TestActivityIdCase()
         {
             var activity = new Activity();
@@ -39,10 +40,10 @@ namespace TinCanTestsNet461
             Assert.AreEqual(mixedCase, activity.id);
         }
 
-        [Test]
+        [TestMethod]
         public void TestActivityIdInvalidUri()
         {
-            Assert.Throws<System.UriFormatException>(
+            Assert.ThrowsException<System.UriFormatException>(
                 () =>
                 {
                     var activity = new Activity();
